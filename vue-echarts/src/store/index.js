@@ -6,12 +6,12 @@ const state = {
   cityList: [],
 }
 const mutations = {
-  getAllCity(state, payload) {
+  getAllCity (state, payload) {
     state.cityList = payload.cityList
   },
 }
 const actions = {
-  async getAllCity({ commit }) {
+  async getAllCity ({ commit }) {
     console.log('哈哈哈')
     const res = await axios.get('/data/cityList.json')
     commit('getAllCity', {
@@ -19,11 +19,22 @@ const actions = {
     })
   },
 }
+
+const getters = {
+  totalCount (state) {
+    let total = 0
+    state.cityList.forEach(item => {
+      total += item.confirmedCount
+    })
+    return total + ''
+  }
+}
 const store = new Vuex.Store({
   strict: true,
   state,
   actions,
   mutations,
+  getters
 })
 
 export default store
